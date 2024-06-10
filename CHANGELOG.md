@@ -1,3 +1,5 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+- Change of readme
+- handle error using dio
+
