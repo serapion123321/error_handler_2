@@ -1,13 +1,14 @@
 name: error_handler_2
-description: A new Flutter package project.
+description: Package to handle error
 version: 0.0.1
-homepage:
+homepage: https://github.com/serapion123321/error_handler_2
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
+  dio: ^5.4.3+1
   flutter:
     sdk: flutter
 
