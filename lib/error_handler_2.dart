@@ -104,7 +104,7 @@ class ErrorHandler {
                     chatId: ErrorHandlerVar.chatIdTelegram,
                     url: '',
                     statusCode: 0,
-                    statusMessage: "Terjadi Unexpected Error",
+                    statusMessage: "Unexpected Error has occured",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
                     appVersion: ErrorHandlerVar.appVersion,
@@ -125,7 +125,7 @@ class ErrorHandler {
                     chatId: ErrorHandlerVar.chatIdTelegram,
                     url: dioException?.response?.requestOptions.path,
                     statusCode: dioException?.response?.statusCode ?? 0,
-                    statusMessage: "Terjadi Unexpected Error",
+                    statusMessage: "Unexpected Error has occured",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
                     appVersion: ErrorHandlerVar.appVersion,
@@ -143,7 +143,7 @@ class ErrorHandler {
                     chatId: ErrorHandlerVar.chatIdTelegram,
                     url: '',
                     statusCode: 0,
-                    statusMessage: "Terjadi Unexpected Error",
+                    statusMessage: "Unexpected Error has occured",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
                     appVersion: ErrorHandlerVar.appVersion,
@@ -154,6 +154,21 @@ class ErrorHandler {
           }
         default:
           log("DioError type: ${dioException?.type}");
+          if(ErrorHandlerVar.isSendToTelegram){
+            if(ErrorHandlerVar.tokenTelegramPrivate != '' && ErrorHandlerVar.chatIdTelegram != ''){
+              sendTelegram(
+                  tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
+                  chatId: ErrorHandlerVar.chatIdTelegram,
+                  url: '',
+                  statusCode: 0,
+                  statusMessage: "Unexpected Error has occured",
+                  statusNote: dioException?.message,
+                  device: ErrorHandlerVar.device,
+                  appVersion: ErrorHandlerVar.appVersion,
+                  env: kDebugMode ? "Debug" : "Release",
+                  paramBody: '');
+            }
+          }
       }
     } catch (er) {
       log("Error Report Failed, Error: $er");

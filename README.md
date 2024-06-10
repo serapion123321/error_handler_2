@@ -1,39 +1,69 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+## Description
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+Flutter error handler 2, is simple plugin to easily handle error in repository area. it can send error to telegram to make developer know something happen to their app
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+## Vision
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+> Fast and Easy to know error in production without complicated
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+use Initialization.setTelegram to activate optional feature to send error to telegram. log error will be default when in debug mode.
 
-## Usage
+```dart  
+Future<void> setTelegram(String tokenTelegramPrivate, String chatIdTelegram, bool isSendToTelegram) async {
+    ErrorHandlerVar.tokenTelegramPrivate = tokenTelegramPrivate;
+    ErrorHandlerVar.chatIdTelegram = chatIdTelegram;
+    ErrorHandlerVar.isSendToTelegram = isSendToTelegram;
+  }
+```  
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+you can set device data to know user device when it come to error. Make it easy to analyze.
 
 ```dart
-const like = 'sample';
+  Future<void> setDeviceData(String device, String appVersion) async {
+    ErrorHandlerVar.device = device;
+    ErrorHandlerVar.appVersion = appVersion;
+  }
 ```
 
-## Additional information
+you can set function to run if any of it trigger error
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+Future<void> setErrorMessageFromBackend(String e) async {
+    ErrorHandlerVar.errorMessageFromBackend = e;
+  }
+
+  Future<void> setServerErrorHandler(Function setServerErrorHandler) async {
+    ErrorHandlerVar.serverErrorHandler = setServerErrorHandler;
+  }
+
+  Future<void> setBadRequestHandler(Function setBadRequestHandler) async {
+    ErrorHandlerVar.badRequestHandler = setBadRequestHandler;
+  }
+
+  Future<void> setNotFoundErrorHandler(Function setNotFoundErrorHandler) async {
+    ErrorHandlerVar.notFoundErrorHandler = setNotFoundErrorHandler;
+  }
+
+  Future<void> setForbiddenErrorHandler(Function setForbiddenErrorHandler) async {
+    ErrorHandlerVar.forbiddenErrorHandler = setForbiddenErrorHandler;
+  }
+
+  Future<void> setUnauthorizedErrorHandler(Function setUnauthorizedErrorHandler) async {
+    ErrorHandlerVar.unauthorizedErrorHandler = setUnauthorizedErrorHandler;
+  }
+
+  Future<void> setUnexpectedErrorHandler(Function setUnexpectedErrorHandler) async {
+    ErrorHandlerVar.unexpectedErrorHandler = setUnexpectedErrorHandler;
+  }
+```
+
+## To Do / Roadmap
+
+**Version 1.0.0**
+- [ ] using http instead of dio to send to telegram
+
+## Information
+
+[Github Repo](https://github.com/serapion123321/error_handler_2)
