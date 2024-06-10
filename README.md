@@ -27,6 +27,38 @@ you can set device data to know user device when it come to error. Make it easy 
   }
 ```
 
+you can set function to run if any of it trigger error
+
+```dart
+Future<void> setErrorMessageFromBackend(String e) async {
+    ErrorHandlerVar.errorMessageFromBackend = e;
+  }
+
+  Future<void> setServerErrorHandler(Function setServerErrorHandler) async {
+    ErrorHandlerVar.serverErrorHandler = setServerErrorHandler;
+  }
+
+  Future<void> setBadRequestHandler(Function setBadRequestHandler) async {
+    ErrorHandlerVar.badRequestHandler = setBadRequestHandler;
+  }
+
+  Future<void> setNotFoundErrorHandler(Function setNotFoundErrorHandler) async {
+    ErrorHandlerVar.notFoundErrorHandler = setNotFoundErrorHandler;
+  }
+
+  Future<void> setForbiddenErrorHandler(Function setForbiddenErrorHandler) async {
+    ErrorHandlerVar.forbiddenErrorHandler = setForbiddenErrorHandler;
+  }
+
+  Future<void> setUnauthorizedErrorHandler(Function setUnauthorizedErrorHandler) async {
+    ErrorHandlerVar.unauthorizedErrorHandler = setUnauthorizedErrorHandler;
+  }
+
+  Future<void> setUnexpectedErrorHandler(Function setUnexpectedErrorHandler) async {
+    ErrorHandlerVar.unexpectedErrorHandler = setUnexpectedErrorHandler;
+  }
+```
+
 ## To Do / Roadmap
 
 **Version 1.0.0**
