@@ -34,7 +34,7 @@ class ErrorHandler {
         case DioExceptionType.receiveTimeout:
         case DioExceptionType.sendTimeout:
 
-        /// connection timeout from client
+          /// connection timeout from client
           timeoutErrorHandler;
           sendTelegram(
               tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
@@ -50,55 +50,57 @@ class ErrorHandler {
           break;
         case DioExceptionType.badResponse:
 
-        /// use dioError if not null
+          /// use dioError if not null
           if (dioException?.error != null) {
             if (dioException?.response?.statusCode == 500 ||
                 dioException?.response?.statusCode == 502 ||
                 dioException?.response?.statusCode == 503 ||
                 dioException?.response?.statusCode == 504) {
               /// 500 || 502 || 504
-              serverErrorHandler ?? ErrorHandlerVar.serverErrorHandler;
+              serverErrorHandler;
             } else if (dioException?.response?.statusCode == 400) {
               /// 400
-              badRequestHandler ?? ErrorHandlerVar.badRequestHandler;
+              badRequestHandler;
             } else if (dioException?.response?.statusCode == 404) {
               /// 404
-              notFoundErrorHandler ?? ErrorHandlerVar.notFoundErrorHandler;
+              notFoundErrorHandler;
             } else if (dioException?.response?.statusCode == 403) {
               /// 403
-              forbiddenErrorHandler ?? ErrorHandlerVar.forbiddenErrorHandler;
+              forbiddenErrorHandler;
             } else if (dioException?.response?.statusCode == 401) {
               /// 401
-              unauthorizedErrorHandler ??
-                  ErrorHandlerVar.unauthorizedErrorHandler;
+              unauthorizedErrorHandler;
             } else {
-              unexpectedErrorHandler ?? ErrorHandlerVar.unexpectedErrorHandler;
+              unexpectedErrorHandler;
             }
             if (kDebugMode) {
               log("DioError type: ${dioException?.type}");
             }
-            if(ErrorHandlerVar.isSendToTelegram){
-              if(ErrorHandlerVar.tokenTelegramPrivate != '' && ErrorHandlerVar.chatIdTelegram != ''){
+            if (ErrorHandlerVar.isSendToTelegram) {
+              if (ErrorHandlerVar.tokenTelegramPrivate != '' &&
+                  ErrorHandlerVar.chatIdTelegram != '') {
                 sendTelegram(
                     tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
                     chatId: ErrorHandlerVar.chatIdTelegram,
                     url: dioException?.response?.requestOptions.path,
                     statusCode: dioException?.response?.statusCode ?? 0,
                     statusMessage:
-                    dioException?.response?.data ?? "Tidak ada pesan error",
+                        dioException?.response?.data ?? "Tidak ada pesan error",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
                     appVersion: ErrorHandlerVar.appVersion,
                     env: kDebugMode ? "Debug" : "Release",
-                    paramBody: dioException?.response?.requestOptions.data.toString());
+                    paramBody:
+                        dioException?.response?.requestOptions.data.toString());
               } else {
                 log("Token Telegram Or chat Id Telegram was not set");
               }
             }
           } else {
             log("DioError type: ${dioException?.type}");
-            if(ErrorHandlerVar.isSendToTelegram){
-              if(ErrorHandlerVar.tokenTelegramPrivate != '' && ErrorHandlerVar.chatIdTelegram != ''){
+            if (ErrorHandlerVar.isSendToTelegram) {
+              if (ErrorHandlerVar.tokenTelegramPrivate != '' &&
+                  ErrorHandlerVar.chatIdTelegram != '') {
                 sendTelegram(
                     tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
                     chatId: ErrorHandlerVar.chatIdTelegram,
@@ -118,8 +120,9 @@ class ErrorHandler {
           break;
         case DioExceptionType.unknown:
           if (dioException?.error != null) {
-            if(ErrorHandlerVar.isSendToTelegram){
-              if(ErrorHandlerVar.tokenTelegramPrivate != '' && ErrorHandlerVar.chatIdTelegram != ''){
+            if (ErrorHandlerVar.isSendToTelegram) {
+              if (ErrorHandlerVar.tokenTelegramPrivate != '' &&
+                  ErrorHandlerVar.chatIdTelegram != '') {
                 sendTelegram(
                     tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
                     chatId: ErrorHandlerVar.chatIdTelegram,
@@ -136,8 +139,9 @@ class ErrorHandler {
               }
             }
           } else {
-            if(ErrorHandlerVar.isSendToTelegram){
-              if(ErrorHandlerVar.tokenTelegramPrivate != '' && ErrorHandlerVar.chatIdTelegram != ''){
+            if (ErrorHandlerVar.isSendToTelegram) {
+              if (ErrorHandlerVar.tokenTelegramPrivate != '' &&
+                  ErrorHandlerVar.chatIdTelegram != '') {
                 sendTelegram(
                     tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
                     chatId: ErrorHandlerVar.chatIdTelegram,
@@ -154,8 +158,9 @@ class ErrorHandler {
           }
         default:
           log("DioError type: ${dioException?.type}");
-          if(ErrorHandlerVar.isSendToTelegram){
-            if(ErrorHandlerVar.tokenTelegramPrivate != '' && ErrorHandlerVar.chatIdTelegram != ''){
+          if (ErrorHandlerVar.isSendToTelegram) {
+            if (ErrorHandlerVar.tokenTelegramPrivate != '' &&
+                ErrorHandlerVar.chatIdTelegram != '') {
               sendTelegram(
                   tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
                   chatId: ErrorHandlerVar.chatIdTelegram,
@@ -176,20 +181,44 @@ class ErrorHandler {
   }
 
   Future<void> sendTelegram(
+      /// Function to send chat to telegram
       {url,
-        statusCode,
-        statusMessage,
-        statusNote,
-        String? paramBody,
-        String? device,
-        String? appVersion,
-        String? env,
-        required String tokenPrivate,
-        required String chatId}) async {
+      statusCode,
+      statusMessage,
+      statusNote,
+      String? paramBody,
+      String? device,
+      String? appVersion,
+      String? env,
+      required String tokenPrivate,
+      required String chatId}) async {
     try {
       Dio().post(
         "https://api.telegram.org/$tokenPrivate/sendMessage?chat_id=$chatId&text=url: <b>$url</b>;\nerror_code: <b>$statusCode</b>;\nerror_message: <b>$statusMessage</b>;\nerror_note: <b>$statusNote</b>;\ndevice: <b>$device</b>;\nappVersion: <b>$appVersion</b>;\nenv: <b>$env</b>;\nparamBody: <b>$paramBody</b>;&parse_mode=html",
       );
+    } catch (er) {
+      log(er.toString());
+    }
+  }
+
+  Future<void> sendDocument(
+      /// Function to send document to telegram
+      {url,
+      required String path,
+      required String tokenPrivate,
+      required String chatId}) async {
+    try {
+      FormData formData = FormData.fromMap({
+        "chat_id": ErrorHandlerVar.chatIdTelegram,
+        "document": await MultipartFile.fromFile(path, filename: path),
+      });
+      await Dio()
+          .post(
+              "https://api.telegram.org/${ErrorHandlerVar.tokenTelegramPrivate}/sendDocument",
+              data: formData)
+          .then((value) {
+        log(value.toString());
+      });
     } catch (er) {
       log(er.toString());
     }

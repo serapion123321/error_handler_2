@@ -27,36 +27,55 @@ you can set device data to know user device when it come to error. Make it easy 
   }
 ```
 
-you can set function to run if any of it trigger error
+using standalone function to send to telegram
 
 ```dart
-Future<void> setErrorMessageFromBackend(String e) async {
-    ErrorHandlerVar.errorMessageFromBackend = e;
+
+Future<void> sendTelegram(
+      /// Function to send chat to telegram
+      {url,
+      statusCode,
+      statusMessage,
+      statusNote,
+      String? paramBody,
+      String? device,
+      String? appVersion,
+      String? env,
+      required String tokenPrivate,
+      required String chatId}) async {
+    try {
+      Dio().post(
+        "https://api.telegram.org/$tokenPrivate/sendMessage?chat_id=$chatId&text=url: <b>$url</b>;\nerror_code: <b>$statusCode</b>;\nerror_message: <b>$statusMessage</b>;\nerror_note: <b>$statusNote</b>;\ndevice: <b>$device</b>;\nappVersion: <b>$appVersion</b>;\nenv: <b>$env</b>;\nparamBody: <b>$paramBody</b>;&parse_mode=html",
+      );
+    } catch (er) {
+      log(er.toString());
+    }
   }
 
-  Future<void> setServerErrorHandler(Function setServerErrorHandler) async {
-    ErrorHandlerVar.serverErrorHandler = setServerErrorHandler;
+  Future<void> sendDocument(
+      /// Function to send document to telegram
+      {url,
+      required String path,
+      required String tokenPrivate,
+      required String chatId}) async {
+    try {
+      FormData formData = FormData.fromMap({
+        "chat_id": ErrorHandlerVar.chatIdTelegram,
+        "document": await MultipartFile.fromFile(path, filename: path),
+      });
+      await Dio()
+          .post(
+              "https://api.telegram.org/${ErrorHandlerVar.tokenTelegramPrivate}/sendDocument",
+              data: formData)
+          .then((value) {
+        log(value.toString());
+      });
+    } catch (er) {
+      log(er.toString());
+    }
   }
 
-  Future<void> setBadRequestHandler(Function setBadRequestHandler) async {
-    ErrorHandlerVar.badRequestHandler = setBadRequestHandler;
-  }
 
-  Future<void> setNotFoundErrorHandler(Function setNotFoundErrorHandler) async {
-    ErrorHandlerVar.notFoundErrorHandler = setNotFoundErrorHandler;
-  }
-
-  Future<void> setForbiddenErrorHandler(Function setForbiddenErrorHandler) async {
-    ErrorHandlerVar.forbiddenErrorHandler = setForbiddenErrorHandler;
-  }
-
-  Future<void> setUnauthorizedErrorHandler(Function setUnauthorizedErrorHandler) async {
-    ErrorHandlerVar.unauthorizedErrorHandler = setUnauthorizedErrorHandler;
-  }
-
-  Future<void> setUnexpectedErrorHandler(Function setUnexpectedErrorHandler) async {
-    ErrorHandlerVar.unexpectedErrorHandler = setUnexpectedErrorHandler;
-  }
 ```
 
 ## To Do / Roadmap
