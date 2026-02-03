@@ -8,9 +8,10 @@ class Initialization{
     ErrorHandlerVar.isSendToTelegram = isSendToTelegram;
   }
 
-  Future<void> setDeviceData(String device, String appVersion) async {
+  Future<void> setDeviceData(String device, String appVersion, String appName) async {
     ErrorHandlerVar.device = device;
     ErrorHandlerVar.appVersion = appVersion;
+    ErrorHandlerVar.appName = appName;
   }
 
   // Future<void> setErrorMessageFromBackend(String e) async {
