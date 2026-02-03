@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-
 class ErrorHandlerVar{
   /// Send To Telegram
   static bool isSendToTelegram = false;
@@ -12,12 +10,15 @@ class ErrorHandlerVar{
   /// Device Data
   static String device = '';
   static String appVersion = '';
+  static String appName = '';
+
+
 
   /// Function StandAlone
-  static Function serverErrorHandler = (DioException er){};
-  static Function badRequestHandler = (DioException er){};
-  static Function notFoundErrorHandler = (DioException er){};
-  static Function forbiddenErrorHandler = (DioException er){};
-  static Function unauthorizedErrorHandler = (DioException er){};
-  static Function unexpectedErrorHandler = (DioException er){};
+  // static Function serverErrorHandler = (DioException er){};
+  // static Function badRequestHandler = (DioException er){};
+  // static Function notFoundErrorHandler = (DioException er){};
+  // static Function forbiddenErrorHandler = (DioException er){};
+  // static Function unauthorizedErrorHandler = (DioException er){};
+  // static Function unexpectedErrorHandler = (DioException er){};
 }

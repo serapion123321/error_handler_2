@@ -8,36 +8,37 @@ class Initialization{
     ErrorHandlerVar.isSendToTelegram = isSendToTelegram;
   }
 
-  Future<void> setDeviceData(String device, String appVersion) async {
+  Future<void> setDeviceData(String device, String appVersion, String appName) async {
     ErrorHandlerVar.device = device;
     ErrorHandlerVar.appVersion = appVersion;
+    ErrorHandlerVar.appName = appName;
   }
 
-  Future<void> setErrorMessageFromBackend(String e) async {
-    ErrorHandlerVar.errorMessageFromBackend = e;
-  }
-
-  Future<void> setServerErrorHandler(Function setServerErrorHandler) async {
-    ErrorHandlerVar.serverErrorHandler = setServerErrorHandler;
-  }
-
-  Future<void> setBadRequestHandler(Function setBadRequestHandler) async {
-    ErrorHandlerVar.badRequestHandler = setBadRequestHandler;
-  }
-
-  Future<void> setNotFoundErrorHandler(Function setNotFoundErrorHandler) async {
-    ErrorHandlerVar.notFoundErrorHandler = setNotFoundErrorHandler;
-  }
-
-  Future<void> setForbiddenErrorHandler(Function setForbiddenErrorHandler) async {
-    ErrorHandlerVar.forbiddenErrorHandler = setForbiddenErrorHandler;
-  }
-
-  Future<void> setUnauthorizedErrorHandler(Function setUnauthorizedErrorHandler) async {
-    ErrorHandlerVar.unauthorizedErrorHandler = setUnauthorizedErrorHandler;
-  }
-
-  Future<void> setUnexpectedErrorHandler(Function setUnexpectedErrorHandler) async {
-    ErrorHandlerVar.unexpectedErrorHandler = setUnexpectedErrorHandler;
-  }
+  // Future<void> setErrorMessageFromBackend(String e) async {
+  //   ErrorHandlerVar.errorMessageFromBackend = e;
+  // }
+  //
+  // Future<void> setServerErrorHandler(Function setServerErrorHandler) async {
+  //   ErrorHandlerVar.serverErrorHandler = setServerErrorHandler;
+  // }
+  //
+  // Future<void> setBadRequestHandler(Function setBadRequestHandler) async {
+  //   ErrorHandlerVar.badRequestHandler = setBadRequestHandler;
+  // }
+  //
+  // Future<void> setNotFoundErrorHandler(Function setNotFoundErrorHandler) async {
+  //   ErrorHandlerVar.notFoundErrorHandler = setNotFoundErrorHandler;
+  // }
+  //
+  // Future<void> setForbiddenErrorHandler(Function setForbiddenErrorHandler) async {
+  //   ErrorHandlerVar.forbiddenErrorHandler = setForbiddenErrorHandler;
+  // }
+  //
+  // Future<void> setUnauthorizedErrorHandler(Function setUnauthorizedErrorHandler) async {
+  //   ErrorHandlerVar.unauthorizedErrorHandler = setUnauthorizedErrorHandler;
+  // }
+  //
+  // Future<void> setUnexpectedErrorHandler(Function setUnexpectedErrorHandler) async {
+  //   ErrorHandlerVar.unexpectedErrorHandler = setUnexpectedErrorHandler;
+  // }
 }
