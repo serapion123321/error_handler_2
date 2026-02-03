@@ -10,6 +10,9 @@ class ErrorHandlerVar{
   /// Device Data
   static String device = '';
   static String appVersion = '';
+  static String appName = '';
+
+
 
   /// Function StandAlone
   // static Function serverErrorHandler = (DioException er){};

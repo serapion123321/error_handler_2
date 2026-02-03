@@ -85,7 +85,7 @@ class ErrorHandler {
                     url: dioException?.response?.requestOptions.path,
                     statusCode: dioException?.response?.statusCode ?? 0,
                     statusMessage:
-                        dioException?.response?.data ?? "Tidak ada pesan error",
+                        dioException?.response?.data ?? "empty message",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
                     appVersion: ErrorHandlerVar.appVersion,
@@ -104,14 +104,17 @@ class ErrorHandler {
                 sendTelegram(
                     tokenPrivate: ErrorHandlerVar.tokenTelegramPrivate,
                     chatId: ErrorHandlerVar.chatIdTelegram,
-                    url: '',
-                    statusCode: 0,
-                    statusMessage: "Unexpected Error has occured",
+                    url: dioException?.response?.requestOptions.path,
+                    statusCode: dioException?.response?.statusCode ?? 0,
+                    appName: ErrorHandlerVar.appName,
+                    statusMessage:
+                    dioException?.response?.data ?? "empty message",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
                     appVersion: ErrorHandlerVar.appVersion,
                     env: kDebugMode ? "Debug" : "Release",
-                    paramBody: '');
+                    paramBody:
+                    dioException?.response?.requestOptions.data.toString());
               } else {
                 log("Token Telegram Or chat Id Telegram was not set");
               }
@@ -128,6 +131,7 @@ class ErrorHandler {
                     chatId: ErrorHandlerVar.chatIdTelegram,
                     url: dioException?.response?.requestOptions.path,
                     statusCode: dioException?.response?.statusCode ?? 0,
+                    appName: ErrorHandlerVar.appName,
                     statusMessage: "Unexpected Error has occured",
                     statusNote: dioException?.message,
                     device: ErrorHandlerVar.device,
@@ -184,6 +188,7 @@ class ErrorHandler {
       /// Function to send chat to telegram
       {url,
       statusCode,
+      String? appName,
       statusMessage,
       statusNote,
       String? paramBody,
@@ -194,7 +199,7 @@ class ErrorHandler {
       required String chatId}) async {
     try {
       Dio().post(
-        "https://api.telegram.org/$tokenPrivate/sendMessage?chat_id=$chatId&text=url: <b>$url</b>;\nerror_code: <b>$statusCode</b>;\nerror_message: <b>$statusMessage</b>;\nerror_note: <b>$statusNote</b>;\ndevice: <b>$device</b>;\nappVersion: <b>$appVersion</b>;\nenv: <b>$env</b>;\nparamBody: <b>$paramBody</b>;&parse_mode=html",
+        "https://api.telegram.org/$tokenPrivate/sendMessage?chat_id=$chatId&text=url: <b>$url</b>;\nerror_code: <b>$statusCode</b>;\napp_name: <b>$appName</b>;\nerror_message: <b>$statusMessage</b>;\nerror_note: <b>$statusNote</b>;\ndevice: <b>$device</b>;\nappVersion: <b>$appVersion</b>;\nenv: <b>$env</b>;\nparamBody: <b>$paramBody</b>;&parse_mode=html",
       );
     } catch (er) {
       log(er.toString());
