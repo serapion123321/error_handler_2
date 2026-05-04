@@ -12,3 +12,7 @@
 ## 0.0.3
 
 - fix bug send to telegram not include error information
+
+## 0.0.4
+
+- fix bug send to telegram not parse to html and remove bold
