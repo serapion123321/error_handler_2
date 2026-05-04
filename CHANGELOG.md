@@ -16,3 +16,8 @@
 ## 0.0.4
 
 - fix bug send to telegram not parse to html and remove bold
+
+## 0.0.5
+
+- fix version
+
