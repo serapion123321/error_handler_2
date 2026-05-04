@@ -1,6 +1,6 @@
 name: error_handler_2
 description: Package to handle error
-version: 0.0.3
+version: 0.0.5
 homepage: https://github.com/serapion123321/error_handler_2
 
 environment:
